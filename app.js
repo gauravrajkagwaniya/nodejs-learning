@@ -2,7 +2,20 @@
 const Joi = require('joi');
 const express = require('express');
 const app = express();
-const db = require("./connection");
+const db = require("./src/dbConnection/connection");
+const path = require('path');
+const multer = require('multer');
+const { ok } = require('assert');
+const storage = multer.diskStorage({
+    destination: (req, file, cb)=>{
+        cb(null,'images')
+    },
+    filename: (req, file, cb)=>{
+cb(null,Date.now() + path.extname(file.originalname))
+    }
+});
+
+const upload = multer({storage: storage})
 // getting express json because by default its doesnt work.
 // implimented a middleware to get it accommodate the needed feature of json conversion
 app.use(express.json());
@@ -188,6 +201,14 @@ app.delete('/api/courses/:id', (req,res)=>{
     });
 
 });
+
+// implemention of image upload to the root /image folder.
+app.post('/api/courses/uploadImage',upload.single("image"),(req,res)=>{
+    console.log(res.error); 
+    res.send("Image uploaded"); 
+   
+});
+
 
 
 // Implement a environment variable to access dynamic ports
