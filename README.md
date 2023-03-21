@@ -6,7 +6,8 @@ POC of nodejs application.
 - expressjs
 - nodemon ``To restart the server after working``
 - joi ``validate json``
-- multer ``image upload within root``
+- multer 
+    -   ``image upload within root``
 - sql/mysql
 
 
